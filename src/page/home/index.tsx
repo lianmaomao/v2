@@ -726,7 +726,7 @@ export default function Home({ }) {
                                     color: '#f28703',
                                     fontSize: "22px",
                                     fontWeight: "400"
-                                }} value={fromValue(totalAmount)} precision={2} />
+                                }} value={fromValue(new BigNumber(totalAmount).dividedBy(7).toString())} precision={2} />
                             </Col>
                             <Col flex={1}>
                                 <p>已返还</p>
@@ -734,7 +734,7 @@ export default function Home({ }) {
                                     color: '#f28703',
                                     fontSize: "22px",
                                     fontWeight: "400"
-                                }} value={fromValue(returnedAmount)} precision={2} />
+                                }} value={fromValue(new BigNumber(returnedAmount).dividedBy(7).toString())} precision={2} />
                             </Col>
                         </Row>
                         <Row className='textcenter'>
@@ -777,7 +777,7 @@ export default function Home({ }) {
                                     fontSize: "22px",
                                     fontWeight: "400",
                                     paddingLeft: "10px"
-                                }} value={fromValue(returnedAmount)} precision={2} />
+                                }} value={fromValue(new BigNumber(returnedAmount).dividedBy(7).toString())} precision={2} />
 
                             </Col>
                         </Row>
@@ -791,7 +791,7 @@ export default function Home({ }) {
                                     fontSize: "22px",
                                     fontWeight: "400",
                                     paddingLeft: "10px"
-                                }} value={fromValue(inviteProfit)} precision={2} />
+                                }} value={fromValue(new BigNumber(inviteProfit).dividedBy(7).toString())} precision={2} />
                             </Col>
                         </Row>
                         <Row className='texthight'>
@@ -804,7 +804,7 @@ export default function Home({ }) {
                                     fontSize: "22px",
                                     fontWeight: "400",
                                     paddingLeft: "10px"
-                                }} value={fromValue(vipProfit)} precision={2} />
+                                }} value={fromValue(new BigNumber(vipProfit).dividedBy(7).toString())} precision={2} />
                             </Col>
                         </Row>
                     </div>
