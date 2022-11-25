@@ -318,9 +318,11 @@ export default function Home({ }) {
                             setIsUsdtApprove(true)
                         } else if (type == 3) {
                             loadingStore.changeLoad("交易成功", true, "success");
+                            init()
                             closeBuyModal()
                         } else if (type == 4) {
                             loadingStore.changeLoad("交易成功", true, "success");
+                            init()
                             closeSellModal()
                         } else {
                             loadingStore.changeLoad("交易成功", true, "success");
@@ -347,8 +349,6 @@ export default function Home({ }) {
         setSellAmount('');
         setSellModal(false);
     }
-
-
 
     const connectWallet = () => {
         window.ethereum.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: process.env.REACT_APP_NET_CHAIN_ID + "" }] })
