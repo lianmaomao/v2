@@ -1,4 +1,7 @@
 const webpack = require("webpack");
+const path = require('path')
+const paths = require('react-scripts/config/paths')
+paths.appBuild = path.join(path.dirname(paths.appBuild), 'docs')
 
 module.exports = function override(config) {
     const fallback = config.resolve.fallback || {};

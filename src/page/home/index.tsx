@@ -595,105 +595,6 @@ export default function Home({ }) {
                         </Row>
                     </div>
 
-                    <div className='card card-shadow-gray'>
-                        <Row>
-                            <Col span={24} className='card-box'>
-                                <img src={iconRecharge1} alt="" />
-                                <p>
-                                    业绩
-                                </p>
-                            </Col>
-                        </Row>
-                        <Row className='textcenter'>
-                            <Col flex={1}>
-                                <p>应返还</p>
-                                <Statistic valueStyle={{
-                                    color: '#f28703',
-                                    fontSize: "22px",
-                                    fontWeight: "400"
-                                }} value={fromValue(totalAmount)} precision={2} />
-                            </Col>
-                            <Col flex={1}>
-                                <p>已返还</p>
-                                <Statistic valueStyle={{
-                                    color: '#f28703',
-                                    fontSize: "22px",
-                                    fontWeight: "400"
-                                }} value={fromValue(returnedAmount)} precision={2} />
-                            </Col>
-                        </Row>
-                        <Row className='textcenter'>
-                            <Col flex={1}>
-                                <p>大区业绩</p>
-                                <Statistic valueStyle={{
-                                    color: '#f28703',
-                                    fontSize: "22px",
-                                    fontWeight: "400"
-                                }} value={fromValue(maxScore)} precision={2} />
-                            </Col>
-                            <Col flex={1}>
-                                <p>其他业绩</p>
-
-                                <Statistic valueStyle={{
-                                    color: '#f28703',
-                                    fontSize: "22px",
-                                    fontWeight: "400"
-                                }} value={fromValue(new BigNumber(score).minus(maxScore).toFixed())} precision={2} />
-                            </Col>
-                        </Row>
-                    </div>
-
-                    <div className='card card-shadow-origin '>
-                        <Row>
-                            <Col span={24} className='card-box'>
-                                <img src={iconRecharge} alt="" />
-                                <p>
-                                    收益
-                                </p>
-                            </Col>
-                        </Row>
-                        <Row className='texthight'>
-                            <Col>
-                                <p>静态收益:</p>
-                            </Col>
-                            <Col flex={"auto"}>
-                                <Statistic valueStyle={{
-                                    color: '#f28703',
-                                    fontSize: "22px",
-                                    fontWeight: "400",
-                                    paddingLeft: "10px"
-                                }} value={fromValue(returnedAmount)} precision={2} />
-
-                            </Col>
-                        </Row>
-                        <Row className='texthight'>
-                            <Col>
-                                <p>推荐收益:</p>
-                            </Col>
-                            <Col flex={"auto"}>
-                                <Statistic valueStyle={{
-                                    color: '#f28703',
-                                    fontSize: "22px",
-                                    fontWeight: "400",
-                                    paddingLeft: "10px"
-                                }} value={fromValue(inviteProfit)} precision={2} />
-                            </Col>
-                        </Row>
-                        <Row className='texthight'>
-                            <Col>
-                                <p>分红收益:</p>
-                            </Col>
-                            <Col flex={"auto"}>
-                                <Statistic valueStyle={{
-                                    color: '#f28703',
-                                    fontSize: "22px",
-                                    fontWeight: "400",
-                                    paddingLeft: "10px"
-                                }} value={fromValue(vipProfit)} precision={2} />
-                            </Col>
-                        </Row>
-                    </div>
-
                     <div className='card card-shadow-gray '>
                         <Row>
                             <Col span={24} className='card-box'>
@@ -791,6 +692,105 @@ export default function Home({ }) {
                                 <Button type="primary" onClick={() => {
                                     setSellModal(true);
                                 }}>卖出</Button>
+                            </Col>
+                        </Row>
+                    </div>
+
+                    <div className='card card-shadow-origin'>
+                        <Row>
+                            <Col span={24} className='card-box'>
+                                <img src={iconRecharge1} alt="" />
+                                <p>
+                                    业绩
+                                </p>
+                            </Col>
+                        </Row>
+                        <Row className='textcenter'>
+                            <Col flex={1}>
+                                <p>应返还</p>
+                                <Statistic valueStyle={{
+                                    color: '#f28703',
+                                    fontSize: "22px",
+                                    fontWeight: "400"
+                                }} value={fromValue(totalAmount)} precision={2} />
+                            </Col>
+                            <Col flex={1}>
+                                <p>已返还</p>
+                                <Statistic valueStyle={{
+                                    color: '#f28703',
+                                    fontSize: "22px",
+                                    fontWeight: "400"
+                                }} value={fromValue(returnedAmount)} precision={2} />
+                            </Col>
+                        </Row>
+                        <Row className='textcenter'>
+                            <Col flex={1}>
+                                <p>大区业绩</p>
+                                <Statistic valueStyle={{
+                                    color: '#f28703',
+                                    fontSize: "22px",
+                                    fontWeight: "400"
+                                }} value={fromValue(maxScore)} precision={2} />
+                            </Col>
+                            <Col flex={1}>
+                                <p>其他业绩</p>
+
+                                <Statistic valueStyle={{
+                                    color: '#f28703',
+                                    fontSize: "22px",
+                                    fontWeight: "400"
+                                }} value={fromValue(new BigNumber(score).minus(maxScore).toFixed())} precision={2} />
+                            </Col>
+                        </Row>
+                    </div>
+
+                    <div className='card card-shadow-gray'>
+                        <Row>
+                            <Col span={24} className='card-box'>
+                                <img src={iconRecharge} alt="" />
+                                <p>
+                                    收益
+                                </p>
+                            </Col>
+                        </Row>
+                        <Row className='texthight'>
+                            <Col>
+                                <p>静态收益:</p>
+                            </Col>
+                            <Col flex={"auto"}>
+                                <Statistic valueStyle={{
+                                    color: '#f28703',
+                                    fontSize: "22px",
+                                    fontWeight: "400",
+                                    paddingLeft: "10px"
+                                }} value={fromValue(returnedAmount)} precision={2} />
+
+                            </Col>
+                        </Row>
+                        <Row className='texthight'>
+                            <Col>
+                                <p>推荐收益:</p>
+                            </Col>
+                            <Col flex={"auto"}>
+                                <Statistic valueStyle={{
+                                    color: '#f28703',
+                                    fontSize: "22px",
+                                    fontWeight: "400",
+                                    paddingLeft: "10px"
+                                }} value={fromValue(inviteProfit)} precision={2} />
+                            </Col>
+                        </Row>
+                        <Row className='texthight'>
+                            <Col>
+                                <p>分红收益:</p>
+                            </Col>
+                            <Col flex={"auto"}>
+                                <Statistic valueStyle={{
+                                    color: '#f28703',
+                                    fontSize: "22px",
+                                    fontWeight: "400",
+                                    paddingLeft: "10px"
+                                }} value={fromValue(vipProfit)} precision={2} />
                             </Col>
                         </Row>
                     </div>
