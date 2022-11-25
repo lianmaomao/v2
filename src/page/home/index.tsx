@@ -144,7 +144,6 @@ export default function Home({ }) {
         })
     }
 
-
     const sendDeposit = () => {
 
         if (!isAddress(inviter) || inviter === AddressZero) {
@@ -174,6 +173,7 @@ export default function Home({ }) {
                     loadingStore.changeLoad("交易失败", true, "error");
                 });
         }).catch((error: any) => {
+            loadingStore.changeLoad("交易失败", true, "error");
             console.log("gas error=", error)
         });
     }
@@ -191,10 +191,10 @@ export default function Home({ }) {
                     }
                 }).catch((error: any) => {
                     console.log(" error=", error)
-
+                    loadingStore.changeLoad("交易失败", true, "error");
                 });
         }).catch((error: any) => {
-
+            loadingStore.changeLoad("交易失败", true, "error");
             console.log("gas error=", error)
         });
     }
@@ -213,8 +213,10 @@ export default function Home({ }) {
                     }
                 }).catch((error: any) => {
                     setIsApprove(false)
+                    loadingStore.changeLoad("授权失败", true, "error");
                 });
         }).catch((error: any) => {
+            loadingStore.changeLoad("授权失败", true, "error");
 
         });
     }
@@ -233,9 +235,11 @@ export default function Home({ }) {
                     }
                 }).catch((error: any) => {
                     setIsApprove(false)
+                    loadingStore.changeLoad("授权失败", true, "error");
+
                 });
         }).catch((error: any) => {
-
+            loadingStore.changeLoad("授权失败", true, "error");
         });
     }
 
@@ -260,13 +264,12 @@ export default function Home({ }) {
                     }
                 }).catch((error: any) => {
                     console.log(" error=", error)
-
+                    loadingStore.changeLoad("交易失败", true, "error");
                 });
         }).catch((error: any) => {
-
+            loadingStore.changeLoad("交易失败", true, "error");
             console.log("gas error=", error)
         });
-
     }
 
     const sendSell = () => {
@@ -287,12 +290,12 @@ export default function Home({ }) {
                     }
                 }).catch((error: any) => {
                     console.log(" error=", error)
-
+                    loadingStore.changeLoad("交易失败", true, "error");
                 });
         }).catch((error: any) => {
             console.log("gas error=", error)
+            loadingStore.changeLoad("交易失败", true, "error");
         });
-
     }
 
     const TransactionReceipt = (hash: any, type?: number) => {
