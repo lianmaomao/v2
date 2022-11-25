@@ -458,8 +458,7 @@ export default function Home({ }) {
                                                 fgColor="#000000"
                                             />
                                         </Row>
-
-                                        <Row className='textcenter' style={{
+                                        {/* <Row className='textcenter' style={{
                                             marginTop: "20px"
                                         }}>
                                             <Col flex={1}>
@@ -467,7 +466,7 @@ export default function Home({ }) {
                                                     clickCopyImg(account)
                                                 }}>保存二维码</Button>
                                             </Col>
-                                        </Row>
+                                        </Row> */}
                                     </div>
                                 </Modal>
 
@@ -514,7 +513,7 @@ export default function Home({ }) {
                             >
                                 <div>
                                     <Row className='texthight'>
-                                        <Col>
+                                        <Col span={24}>
                                             <p>推荐地址:</p>
                                         </Col>
                                         <Col flex={"auto"}>
@@ -537,17 +536,29 @@ export default function Home({ }) {
                                     </Row>
 
                                     <Row className='texthight'>
-                                        <Col>
+                                        <Col span={24}>
                                             <p>用户地址:</p>
                                         </Col>
                                         <Col flex={"auto"}>
-                                            <Input value={userAddr} onChange={(e) => {
-                                                setUserAddr(e.target.value)
-                                            }} />
+
+                                            <div style={{
+                                                display: "flex"
+                                            }}>
+                                                <Input value={userAddr} onChange={(e) => {
+                                                    setUserAddr(e.target.value)
+                                                }} />
+
+                                                <img src={iconScanCode} onClick={() => {
+                                                    tp.invokeQRScanner().then((res: any) => {
+                                                        setUserAddr(res)
+                                                    })
+                                                }} alt="" />
+                                            </div>
+
                                         </Col>
                                     </Row>
                                     <Row className='texthight'>
-                                        <Col>
+                                        <Col span={24}>
                                             <p>充值金额:</p>
                                         </Col>
                                         <Col flex={"auto"}>
