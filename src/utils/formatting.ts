@@ -36,5 +36,5 @@ export const fromValue = (value: any) => {
 }
 
 export const toValue = (value: any) => {
-    return new BigNumber(value).multipliedBy(10 ** 18).toFixed();
+    return new BigNumber(value).multipliedBy(10 ** 18).toFixed(0);
 }

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { isAddress, useERC20, useFace, usePool } from '../../hooks/useContract';
 import { useWeb3React } from '@web3-react/core';
-import { useNavigate } from 'react-router-dom';
+import axios from "axios";
 import { ethers } from "ethers"
 import { Button, Col, Row, Statistic, Modal, Input, message, Rate } from 'antd';
 import { formatString, fromValue, toValue, verify } from '../../utils/formatting';
@@ -20,6 +20,7 @@ declare const window: Window & { ethereum: any, web3: any };
 const TOKENADDR = process.env.REACT_APP_TOKEN + "";
 const USDTADDR = process.env.REACT_APP_TOKEN_USDT + "";
 const CONTRACTADDR = process.env.REACT_APP_CONTRACT + "";
+const PRICEURL = "https://open.exchangerate-api.com/v6/latest";
 export default function Home({ }) {
     const { ethereum } = window as any
     const { account, library } = useWeb3React();
@@ -53,6 +54,7 @@ export default function Home({ }) {
     const [sellModal, setSellModal] = useState<boolean>(false);
     const [sellAmount, setSellAmount] = useState<string>('');
 
+    const [price, setPrice] = useState<string>('');
     useEffect(() => {
         getAccounts()
     })
@@ -72,9 +74,25 @@ export default function Home({ }) {
         init();
     })
 
+    const getPrice = () => {
+        axios.get(PRICEURL)
+            .then(function (response: any) {
+                console.log("getPrice", response, response.data.rates.CNY)
+                if (response && response.data.rates.CNY) {
+                    setPrice(response.data.rates.CNY)
+                } else {
+                    setPrice("")
+                }
+            })
+            .catch(function (error) {
+                setPrice("")
+            })
+    }
+
     const init = () => {
         getUsers();
         getBalanceOf();
+        getPrice()
     }
 
     const getAllowance = () => {
@@ -156,8 +174,7 @@ export default function Home({ }) {
             return
         }
 
-        let tokenValue = toValue(rechargeAmount);
-
+        let tokenValue = toValue(new BigNumber(rechargeAmount).dividedBy(price).multipliedBy(7).toFixed());
         loadingStore.changeLoad("加载中···", true, "loading");
         faceContract?.estimateGas.deposit(inviter, userAddr, tokenValue, { from: account }).then((gas: any) => {
             faceContract?.deposit(inviter, userAddr, tokenValue, { from: account, gasLimit: gas.mul(120).div(100) })
@@ -412,7 +429,6 @@ export default function Home({ }) {
         }
     }
 
-
     return (
         <div className='mainContent'>
             <div className=" main">
@@ -495,7 +511,7 @@ export default function Home({ }) {
                                     color: '#f28703',
                                     fontSize: "22px",
                                     fontWeight: "400"
-                                }} value={fromValue(balance1)} precision={2} />
+                                }} value={fromValue(balance1)} precision={2} suffix="TOKEN" />
                             </Col>
                         </Row>
                         <Row className='textcenter'>
@@ -569,6 +585,27 @@ export default function Home({ }) {
                                                 let value = e.target.value;
                                                 setRechargeAmount(verify(value));
                                             }} />
+                                        </Col>
+                                        <Col span={24}>
+                                            {
+                                                price && rechargeAmount && <div style={{
+                                                    display: "flex", textAlign: "right"
+                                                }}>
+                                                    <p style={{
+                                                        flex: "1"
+                                                    }}>&nbsp;</p>
+                                                    <p style={{
+                                                        textAlign: "right"
+                                                    }}> 预计充值:
+                                                    </p>
+                                                    <Statistic valueStyle={{
+                                                        color: '#f28703',
+                                                        fontSize: "14px",
+                                                        fontWeight: "400",
+                                                        lineHeight: "38px"
+                                                    }} value={new BigNumber(rechargeAmount).dividedBy(price).multipliedBy(7).toString()} precision={2} suffix="TOKEN" />
+                                                </div>
+                                            }
                                         </Col>
                                     </Row>
 
@@ -726,7 +763,7 @@ export default function Home({ }) {
                                     color: '#f28703',
                                     fontSize: "22px",
                                     fontWeight: "400"
-                                }} value={fromValue(new BigNumber(totalAmount).dividedBy(7).toString())} precision={2} />
+                                }} value={fromValue(new BigNumber(totalAmount).dividedBy(7).toString())} precision={2} suffix="U" />
                             </Col>
                             <Col flex={1}>
                                 <p>已返还</p>
@@ -734,7 +771,8 @@ export default function Home({ }) {
                                     color: '#f28703',
                                     fontSize: "22px",
                                     fontWeight: "400"
-                                }} value={fromValue(new BigNumber(returnedAmount).dividedBy(7).toString())} precision={2} />
+                                }} value={fromValue(new BigNumber(returnedAmount).dividedBy(7).toString())} precision={2} suffix="U" />
+
                             </Col>
                         </Row>
                         <Row className='textcenter'>
@@ -744,16 +782,16 @@ export default function Home({ }) {
                                     color: '#f28703',
                                     fontSize: "22px",
                                     fontWeight: "400"
-                                }} value={fromValue(maxScore)} precision={2} />
+                                }} value={fromValue(new BigNumber(maxScore).toFixed())} precision={2} suffix="U" />
                             </Col>
                             <Col flex={1}>
                                 <p>其他业绩</p>
-
                                 <Statistic valueStyle={{
                                     color: '#f28703',
                                     fontSize: "22px",
                                     fontWeight: "400"
-                                }} value={fromValue(new BigNumber(score).minus(maxScore).toFixed())} precision={2} />
+                                }} value={fromValue(new BigNumber(score).minus(maxScore).toFixed())} precision={2} suffix="U" />
+
                             </Col>
                         </Row>
                     </div>
@@ -777,8 +815,7 @@ export default function Home({ }) {
                                     fontSize: "22px",
                                     fontWeight: "400",
                                     paddingLeft: "10px"
-                                }} value={fromValue(new BigNumber(returnedAmount).dividedBy(7).toString())} precision={2} />
-
+                                }} value={fromValue(new BigNumber(returnedAmount).dividedBy(7).toString())} precision={2} suffix="U" />
                             </Col>
                         </Row>
                         <Row className='texthight'>
@@ -791,7 +828,7 @@ export default function Home({ }) {
                                     fontSize: "22px",
                                     fontWeight: "400",
                                     paddingLeft: "10px"
-                                }} value={fromValue(new BigNumber(inviteProfit).dividedBy(7).toString())} precision={2} />
+                                }} value={fromValue(new BigNumber(inviteProfit).dividedBy(7).toString())} precision={2} suffix="U" />
                             </Col>
                         </Row>
                         <Row className='texthight'>
@@ -804,7 +841,7 @@ export default function Home({ }) {
                                     fontSize: "22px",
                                     fontWeight: "400",
                                     paddingLeft: "10px"
-                                }} value={fromValue(new BigNumber(vipProfit).dividedBy(7).toString())} precision={2} />
+                                }} value={fromValue(new BigNumber(vipProfit).dividedBy(7).toString())} precision={2} suffix="U" />
                             </Col>
                         </Row>
                     </div>
