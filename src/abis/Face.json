@@ -98,6 +98,11 @@
 					},
 					{
 						"internalType": "uint256",
+						"name": "selfScore",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
 						"name": "score",
 						"type": "uint256"
 					},

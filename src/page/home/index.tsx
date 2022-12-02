@@ -41,6 +41,7 @@ export default function Home({ }) {
 
     const [score, setScore] = useState<string>('0');
     const [maxScore, setMaxScore] = useState<string>('0');
+    const [selfScore, setSelfScore] = useState<string>('0');
     const [inviter, setInviter] = useState<string>('');
     const [isInviter, setIsInviter] = useState<boolean>(false);
     const [userAddr, setUserAddr] = useState<string>('');
@@ -141,6 +142,7 @@ export default function Home({ }) {
             faceContract?.users(res.maxScoreUser).then((ret: any) => {
                 console.log("getUsers maxScoreUser", res)
                 setMaxScore(ret.score.toString())
+                setSelfScore(ret.selfScore.toString())
             }).catch((err: any) => {
                 console.log("getUsers maxScoreUser", err)
             })
@@ -771,7 +773,7 @@ export default function Home({ }) {
                                     color: '#f28703',
                                     fontSize: "22px",
                                     fontWeight: "400"
-                                }} value={fromValue(new BigNumber(returnedAmount).dividedBy(7).toString())} precision={2} suffix="U" />
+                                }} value={fromValue(new BigNumber(new BigNumber(returnedAmount).plus(balance0).toString()).dividedBy(7).toString())} precision={2} suffix="U" />
 
                             </Col>
                         </Row>
@@ -782,16 +784,15 @@ export default function Home({ }) {
                                     color: '#f28703',
                                     fontSize: "22px",
                                     fontWeight: "400"
-                                }} value={fromValue(new BigNumber(maxScore).toFixed())} precision={2} suffix="U" />
+                                }} value={fromValue(new BigNumber(new BigNumber(maxScore).plus(selfScore).toString()).toFixed())} precision={2} suffix="U" />
                             </Col>
                             <Col flex={1}>
-                                <p>其他业绩</p>
+                                <p>总业绩</p>
                                 <Statistic valueStyle={{
                                     color: '#f28703',
                                     fontSize: "22px",
                                     fontWeight: "400"
-                                }} value={fromValue(new BigNumber(score).minus(maxScore).toFixed())} precision={2} suffix="U" />
-
+                                }} value={fromValue(new BigNumber(score).toFixed())} precision={2} suffix="U" />
                             </Col>
                         </Row>
                     </div>
@@ -815,7 +816,7 @@ export default function Home({ }) {
                                     fontSize: "22px",
                                     fontWeight: "400",
                                     paddingLeft: "10px"
-                                }} value={fromValue(new BigNumber(returnedAmount).dividedBy(7).toString())} precision={2} suffix="U" />
+                                }} value={fromValue(new BigNumber(new BigNumber(returnedAmount).plus(balance0).toString()).dividedBy(7).toString())} precision={2} suffix="U" />
                             </Col>
                         </Row>
                         <Row className='texthight'>
