@@ -796,7 +796,6 @@ export default function Home({ }) {
                             </Col>
                         </Row>
                     </div>
-
                     <div className='card card-shadow-gray'>
                         <Row>
                             <Col span={24} className='card-box'>
