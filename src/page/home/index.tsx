@@ -521,7 +521,7 @@ export default function Home({ }) {
                                 textAlign: "center",
                                 paddingBottom: "10px",
                             }}>
-                                <Rate disabled defaultValue={Number(vip)} />
+                                <Rate disabled defaultValue={Number(vip)} value={Number(vip)} />
                             </Col>
                         </Row>
                         <Row className='textcenter'>
