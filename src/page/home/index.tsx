@@ -841,7 +841,8 @@ export default function Home({ }) {
                                     fontSize: "22px",
                                     fontWeight: "400",
                                     paddingLeft: "10px"
-                                }} value={fromValue(new BigNumber(vipProfit).dividedBy(7).toString())} precision={2} suffix="U" />
+                                    
+                                }} value={fromValue(new BigNumber(new BigNumber(vipProfit).plus(balance1).toString()).dividedBy(7).toString())} precision={2} suffix="U" />
                             </Col>
                         </Row>
                     </div>
