@@ -56,19 +56,19 @@ export default function Home({ }) {
     const [sellAmount, setSellAmount] = useState<string>('');
 
     const [price, setPrice] = useState<string>('');
-    useEffect(() => {
-        getAccounts()
-    })
 
-    const getAccounts = async () => {
-        if (typeof ethereum !== 'undefined') {
-            // connects to MetaMask
-            const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-            console.log("getAccounts", accounts)
-        } else {
-            // tell the user to install an `ethereum` provider extension
-        }
-    }
+    // useEffect(() => {
+    //     getAccounts()
+    // })
+
+    // const getAccounts = async () => {
+    //     if (typeof ethereum !== 'undefined') {
+    //         // connects to MetaMask
+    //         const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+    //     } else {
+    //         // tell the user to install an `ethereum` provider extension
+    //     }
+    // }
 
     useEffect(() => {
         getAllowance()
@@ -78,7 +78,6 @@ export default function Home({ }) {
     const getPrice = () => {
         axios.get(PRICEURL)
             .then(function (response: any) {
-                console.log("getPrice", response, response.data.rates.CNY)
                 if (response && response.data.rates.CNY) {
                     setPrice(response.data.rates.CNY)
                 } else {
@@ -124,7 +123,7 @@ export default function Home({ }) {
 
     const getUsers = () => {
         faceContract?.users(account).then((res: any) => {
-            console.log("getUsers", res)
+            // console.log("getUsers", res)
             if (res.inviter === AddressZero) {
                 setIsInviter(false)
             } else {
@@ -140,7 +139,7 @@ export default function Home({ }) {
             setVipProfit(res.vipProfit.toString())
 
             faceContract?.users(res.maxScoreUser).then((ret: any) => {
-                console.log("getUsers maxScoreUser", res)
+                // console.log("getUsers maxScoreUser", res)
                 setMaxScore(ret.score.toString())
                 setSelfScore(ret.selfScore.toString())
             }).catch((err: any) => {
@@ -154,7 +153,7 @@ export default function Home({ }) {
 
     const getBalanceOf = () => {
         faceContract?.balanceOf(account).then((res: any) => {
-            console.log("balanceOf", res)
+            // console.log("balanceOf", res)
             setBalance0(res[0].toString())
             setBalance1(res[1].toString())
         }).catch((err: any) => {
@@ -513,7 +512,7 @@ export default function Home({ }) {
                                     color: '#f28703',
                                     fontSize: "22px",
                                     fontWeight: "400"
-                                }} value={fromValue(balance1)} precision={2} suffix="TOKEN" />
+                                }} value={fromValue(balance1)} precision={2} suffix="CATE" />
                             </Col>
                         </Row>
                         <Row className='textcenter'>
@@ -605,7 +604,7 @@ export default function Home({ }) {
                                                         fontSize: "14px",
                                                         fontWeight: "400",
                                                         lineHeight: "38px"
-                                                    }} value={new BigNumber(rechargeAmount).dividedBy(price).multipliedBy(7).toString()} precision={2} suffix="TOKEN" />
+                                                    }} value={new BigNumber(rechargeAmount).dividedBy(price).multipliedBy(7).toString()} precision={2} suffix="CATE" />
                                                 </div>
                                             }
                                         </Col>
@@ -677,7 +676,7 @@ export default function Home({ }) {
                                                 <Input value={buyAmount} onChange={(e) => {
                                                     let value = e.target.value;
                                                     setBuyAmount(verify(value));
-                                                }} />
+                                                }} suffix={"CATE"}/>
                                             </Col>
                                         </Row>
 
@@ -722,7 +721,7 @@ export default function Home({ }) {
                                                 <Input value={sellAmount} onChange={(e) => {
                                                     let value = e.target.value;
                                                     setSellAmount(verify(value));
-                                                }} />
+                                                }} suffix={"CATE"}/>
                                             </Col>
                                         </Row>
 
