@@ -96,6 +96,7 @@ export default function Home({ }) {
     }
 
     const getAllowance = () => {
+        console.log("tokenContract", CONTRACTADDR)
         tokenContract?.allowance(account, CONTRACTADDR).then((res: any) => {
             // console.log("getAllowance", res.toString())
             if (res.toString() == "0") {
@@ -105,8 +106,9 @@ export default function Home({ }) {
             }
         }).catch((err: any) => {
             setIsApprove(false)
-            console.log("getAllowance err", err)
+            console.log("getAllowance0 err", err)
         })
+        console.log("usdtContract", TOKENADDR)
 
         usdtContract?.allowance(account, TOKENADDR).then((res: any) => {
             // console.log("getAllowance", res.toString())
@@ -117,7 +119,7 @@ export default function Home({ }) {
             }
         }).catch((err: any) => {
             setIsUsdtApprove(false)
-            console.log("getAllowance err", err)
+            console.log("getAllowance1 err", err)
         })
     }
 
@@ -372,7 +374,21 @@ export default function Home({ }) {
         window.ethereum.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: process.env.REACT_APP_NET_CHAIN_ID + "" }] })
             .then(() => {
                 if (window.ethereum) {
-                    console.log("switch chain", process.env.REACT_APP_NET_CHAIN_ID, new Date())
+                    console.log("switch chain", process.env.REACT_APP_NET_CHAIN_ID, new Date());
+                    window.ethereum
+                    .request({ method: 'eth_requestAccounts' })
+                    .then(()=>{
+                        console.log('Please connect to MetaMask.');
+                    })
+                    .catch((error:any) => {
+                      if (error.code === 4001) {
+                        // EIP-1193 userRejectedRequest error
+                        console.log('Please connect to MetaMask.');
+                      } else {
+                        console.error(error);
+                      }
+                    });
+                    
                 } else {
                     alert('Please confirm that you have installed the Metamask wallet.');
                 }
@@ -676,7 +692,7 @@ export default function Home({ }) {
                                                 <Input value={buyAmount} onChange={(e) => {
                                                     let value = e.target.value;
                                                     setBuyAmount(verify(value));
-                                                }} suffix={"KTA"}/>
+                                                }} suffix={"KTA"} />
                                             </Col>
                                         </Row>
 
@@ -721,7 +737,7 @@ export default function Home({ }) {
                                                 <Input value={sellAmount} onChange={(e) => {
                                                     let value = e.target.value;
                                                     setSellAmount(verify(value));
-                                                }} suffix={"KTA"}/>
+                                                }} suffix={"KTA"} />
                                             </Col>
                                         </Row>
 
@@ -840,7 +856,7 @@ export default function Home({ }) {
                                     fontSize: "22px",
                                     fontWeight: "400",
                                     paddingLeft: "10px"
-                                    
+
                                 }} value={fromValue(new BigNumber(new BigNumber(vipProfit).plus(balance1).toString()).dividedBy(7).toString())} precision={2} suffix="U" />
                             </Col>
                         </Row>
