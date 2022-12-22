@@ -96,7 +96,6 @@ export default function Home({ }) {
     }
 
     const getAllowance = () => {
-        console.log("tokenContract", CONTRACTADDR)
         tokenContract?.allowance(account, CONTRACTADDR).then((res: any) => {
             // console.log("getAllowance", res.toString())
             if (res.toString() == "0") {
@@ -108,7 +107,6 @@ export default function Home({ }) {
             setIsApprove(false)
             console.log("getAllowance0 err", err)
         })
-        console.log("usdtContract", TOKENADDR)
 
         usdtContract?.allowance(account, TOKENADDR).then((res: any) => {
             // console.log("getAllowance", res.toString())
@@ -225,7 +223,6 @@ export default function Home({ }) {
         tokenContract?.estimateGas.approve(CONTRACTADDR, MAX_UNIT256, { from: account }).then((gas: any) => {
             tokenContract?.approve(CONTRACTADDR, MAX_UNIT256, { from: account, gasLimit: gas.mul(110).div(100) })
                 .then((response: any) => {
-                    console.log("response", response)
                     if (response && response.hash) {
                         TransactionReceipt(response.hash, 1)
                     } else {
@@ -247,7 +244,6 @@ export default function Home({ }) {
         usdtContract?.estimateGas.approve(TOKENADDR, MAX_UNIT256, { from: account }).then((gas: any) => {
             usdtContract?.approve(TOKENADDR, MAX_UNIT256, { from: account, gasLimit: gas.mul(110).div(100) })
                 .then((response: any) => {
-                    console.log("response", response)
                     if (response && response.hash) {
                         TransactionReceipt(response.hash, 2)
                     } else {
@@ -276,19 +272,16 @@ export default function Home({ }) {
         poolContract?.estimateGas.mint(tokenValue, { from: account }).then((gas: any) => {
             poolContract?.mint(tokenValue, { from: account, gasLimit: gas.mul(120).div(100) })
                 .then((response: any) => {
-                    console.log("response", response)
                     if (response && response.hash) {
                         TransactionReceipt(response.hash, 3)
                     } else {
                         loadingStore.changeLoad("交易失败", true, "error");
                     }
                 }).catch((error: any) => {
-                    console.log(" error=", error)
                     loadingStore.changeLoad("交易失败", true, "error");
                 });
         }).catch((error: any) => {
             loadingStore.changeLoad("交易失败", true, "error");
-            console.log("gas error=", error)
         });
     }
 
@@ -302,18 +295,15 @@ export default function Home({ }) {
         poolContract?.estimateGas.burn(tokenValue, { from: account }).then((gas: any) => {
             poolContract?.burn(tokenValue, { from: account, gasLimit: gas.mul(120).div(100) })
                 .then((response: any) => {
-                    console.log("response", response)
                     if (response && response.hash) {
                         TransactionReceipt(response.hash, 4)
                     } else {
                         loadingStore.changeLoad("交易失败", true, "error");
                     }
                 }).catch((error: any) => {
-                    console.log(" error=", error)
                     loadingStore.changeLoad("交易失败", true, "error");
                 });
         }).catch((error: any) => {
-            console.log("gas error=", error)
             loadingStore.changeLoad("交易失败", true, "error");
         });
     }
@@ -322,7 +312,6 @@ export default function Home({ }) {
         var interval = setInterval(() => {
             let provider = new ethers.providers.Web3Provider(library.provider);
             provider.getTransactionReceipt(hash).then((receipt: any) => {
-                console.log(receipt, "providers");
                 if (receipt != null) {
                     clearInterval(interval);
                     setTimeout(() => {
@@ -388,7 +377,7 @@ export default function Home({ }) {
                         console.error(error);
                       }
                     });
-                    
+
                 } else {
                     alert('Please confirm that you have installed the Metamask wallet.');
                 }
