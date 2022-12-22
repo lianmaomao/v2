@@ -512,7 +512,7 @@ export default function Home({ }) {
                                     color: '#f28703',
                                     fontSize: "22px",
                                     fontWeight: "400"
-                                }} value={fromValue(balance1)} precision={2} suffix="CATE" />
+                                }} value={fromValue(balance1)} precision={2} suffix="KTA" />
                             </Col>
                         </Row>
                         <Row className='textcenter'>
@@ -604,7 +604,7 @@ export default function Home({ }) {
                                                         fontSize: "14px",
                                                         fontWeight: "400",
                                                         lineHeight: "38px"
-                                                    }} value={new BigNumber(rechargeAmount).dividedBy(price).multipliedBy(7).toString()} precision={2} suffix="CATE" />
+                                                    }} value={new BigNumber(rechargeAmount).dividedBy(price).multipliedBy(7).toString()} precision={2} suffix="KTA" />
                                                 </div>
                                             }
                                         </Col>
@@ -676,7 +676,7 @@ export default function Home({ }) {
                                                 <Input value={buyAmount} onChange={(e) => {
                                                     let value = e.target.value;
                                                     setBuyAmount(verify(value));
-                                                }} suffix={"CATE"}/>
+                                                }} suffix={"KTA"}/>
                                             </Col>
                                         </Row>
 
@@ -721,7 +721,7 @@ export default function Home({ }) {
                                                 <Input value={sellAmount} onChange={(e) => {
                                                     let value = e.target.value;
                                                     setSellAmount(verify(value));
-                                                }} suffix={"CATE"}/>
+                                                }} suffix={"KTA"}/>
                                             </Col>
                                         </Row>
 
